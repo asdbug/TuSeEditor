@@ -1,0 +1,5 @@
+bin/
+obj/
+*.user
+tests/TuSeEditor.TestCore/bin/Debug/net8.0-windows/testout/
+publish/

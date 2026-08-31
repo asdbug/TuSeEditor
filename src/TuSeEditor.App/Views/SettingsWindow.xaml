@@ -1,0 +1,34 @@
+<Window x:Class="TuSeEditor.App.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="设置" Width="420" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="#FFF3F4F6">
+    <StackPanel Margin="18">
+        <TextBlock Text="⚙ 全局设置" FontSize="16" FontWeight="Bold" Margin="0,0,0,12" Foreground="#FF1E293B"/>
+
+        <TextBlock Text="抓图引擎" FontWeight="SemiBold" Margin="0,0,0,4"/>
+        <ComboBox x:Name="EngineBox" SelectedValuePath="Tag" SelectedValue="{Binding CaptureEngine, RelativeSource={RelativeSource AncestorType=Window}}">
+            <ComboBoxItem Content="自动(DXGI 优先,失败转 GDI)" Tag="auto"/>
+            <ComboBoxItem Content="仅 DXGI 桌面复制(推荐,支持大多数网游)" Tag="dxgi"/>
+            <ComboBoxItem Content="仅 GDI(最保守,独占全屏游戏可能黑屏)" Tag="gdi"/>
+        </ComboBox>
+        <TextBlock Text="DXGI 桌面复制可抓取 DirectX 游戏画面;GDI 兼容普通窗口。" Foreground="#FF94A3B8" FontSize="11" Margin="0,3,0,10"/>
+
+        <CheckBox x:Name="ScanCodeCheck" Content="键盘使用扫描码模式(兼容 DirectInput 类网游,建议开启)" Margin="0,0,0,10"/>
+
+        <TextBlock Text="脚本整体循环次数(0 = 无限循环)" FontWeight="SemiBold" Margin="0,0,0,4"/>
+        <TextBox x:Name="LoopCountBox" Padding="4,3" Width="100" HorizontalAlignment="Left"/>
+        <TextBlock Text="脚本会从头到尾执行 N 轮;无限循环时用 F10 或 StopScript 步骤停止。" Foreground="#FF94A3B8" FontSize="11" Margin="0,3,0,10"/>
+
+        <Border Background="#FFFFF7ED" BorderBrush="#FFFDBA74" BorderThickness="1" CornerRadius="4" Padding="10,8" Margin="0,0,0,12">
+            <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#FF92400E"
+                       Text="热键:运行 F9 / 停止 F10(全局有效)。&#x0a;提醒:请在自己拥有权限的环境中使用;自动化可能违反网游用户协议,封号风险自负。强反作弊游戏可能拦截模拟输入,属正常现象。"/>
+        </Border>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="取消" Padding="14,5" Margin="0,0,8,0" IsCancel="True"/>
+            <Button Content="保存" Padding="14,5" Click="OnSave" IsDefault="True" Background="#FF1B6DC8" Foreground="White" BorderBrush="Transparent"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
