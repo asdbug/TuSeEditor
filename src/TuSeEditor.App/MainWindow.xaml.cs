@@ -62,6 +62,23 @@ public partial class MainWindow : Window
     void OnExport(object s, RoutedEventArgs e) => _vm.ExportPythonCmd.Execute(null);
     void OnSettings(object s, RoutedEventArgs e) => _vm.ShowSettingsCmd.Execute(null);
 
+    void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.F1)
+        {
+            OpenHelp();
+            e.Handled = true;
+        }
+    }
+
+    void OnHelp(object s, RoutedEventArgs e) => OpenHelp();
+
+    void OpenHelp()
+    {
+        var win = new Views.HelpWindow { Owner = this };
+        win.Show();
+    }
+
     void Toolbox_DoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (_vm.AddStepCmd.CanExecute(null))

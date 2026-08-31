@@ -6,7 +6,20 @@ namespace TuSeEditor.App.ViewModels;
 /// <summary>属性面板行基类:统一持有字符串值,按 Kind 写回参数</summary>
 public partial class PropertyRowVM : ObservableObject
 {
-    public ParamDef Def;
+    private ParamDef _def = new();
+
+    /// <summary>参数定义。用属性而非字段,赋值时同步通知 Label/Options 等派生属性</summary>
+    public ParamDef Def
+    {
+        get => _def;
+        set
+        {
+            _def = value ?? new ParamDef();
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(Label));
+            OnPropertyChanged(nameof(Options));
+        }
+    }
 
     [ObservableProperty]
     private string _value = "";
@@ -21,6 +34,12 @@ public partial class PropertyRowVM : ObservableObject
     private bool _isVisible = true;
 
     public string Label => Def.Label;
+
+    /// <summary>下拉候选项。XAML 的 ComboBox ItemsSource 直接绑定它</summary>
+    public string[] Options => Def.Options;
+
+    /// <summary>按定义校正取值(如旧工程里存的值已不在候选项中,回退到首项,避免下拉框空白)</summary>
+    public virtual void NormalizeValue() { }
 
     /// <summary>勾选框绑定</summary>
     public bool BoolValue
@@ -56,7 +75,14 @@ public partial class PropertyRowVM : ObservableObject
 public class TextRowVM : PropertyRowVM { }
 public class MultiTextRowVM : PropertyRowVM { }
 public class NumberRowVM : PropertyRowVM { }
-public class ComboRowVM : PropertyRowVM { }
+public class ComboRowVM : PropertyRowVM
+{
+    public override void NormalizeValue()
+    {
+        if (Options.Length == 0) return;
+        if (Array.IndexOf(Options, Value) < 0) Value = Options[0];
+    }
+}
 public class CheckRowVM : PropertyRowVM { }
 public class KeysRowVM : PropertyRowVM { }
 

@@ -6,7 +6,8 @@
         Title="图色脚本编辑器" Height="760" Width="1280"
         MinHeight="560" MinWidth="980"
         WindowStartupLocation="CenterScreen"
-        Background="#FFF3F4F6">
+        Background="#FFF3F4F6"
+        PreviewKeyDown="Window_PreviewKeyDown">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Vis"/>
@@ -57,9 +58,11 @@
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type vm:ComboRowVM}">
-            <StackPanel Margin="0,4">
+            <StackPanel Margin="0,4" Visibility="{Binding IsVisible, Converter={StaticResource Bool2Vis}}">
                 <TextBlock Text="{Binding Label}" Foreground="#FF475569" FontSize="12" Margin="0,0,0,3"/>
-                <ComboBox ItemsSource="{Binding Options}" SelectedItem="{Binding Value}" Padding="4,3"/>
+                <ComboBox ItemsSource="{Binding Options}" SelectedItem="{Binding Value}"
+                          Padding="4,3" MinWidth="120" HorizontalAlignment="Left"
+                          BorderBrush="#FFCBD5E1" Background="White"/>
             </StackPanel>
         </DataTemplate>
 
@@ -135,7 +138,8 @@
                 <Button Content="▶ 运行 (F9)" Click="OnRun" Background="#FF16A34A" Foreground="White" BorderBrush="Transparent" Padding="12,5" Margin="0,0,6,0" FontWeight="Bold"/>
                 <Button Content="■ 停止 (F10)" Click="OnStop" Background="#FFDC2626" Foreground="White" BorderBrush="Transparent" Padding="12,5" Margin="0,0,16,0" FontWeight="Bold"/>
                 <Button Content="🐍 导出 Python" Click="OnExport" Background="#FF334155" Foreground="White" BorderBrush="Transparent" Padding="10,5" Margin="0,0,6,0"/>
-                <Button Content="⚙ 设置" Click="OnSettings" Background="#FF334155" Foreground="White" BorderBrush="Transparent" Padding="10,5"/>
+                <Button Content="⚙ 设置" Click="OnSettings" Background="#FF334155" Foreground="White" BorderBrush="Transparent" Padding="10,5" Margin="0,0,6,0"/>
+                <Button Content="❓ 帮助 (F1)" Click="OnHelp" Background="#FF0E7490" Foreground="White" BorderBrush="Transparent" Padding="10,5"/>
             </StackPanel>
         </Border>
 

@@ -227,6 +227,7 @@ public partial class MainViewModel : ObservableObject
             };
             row.Def = def;
             row.Value = node.Model.Str(def.Key);
+            row.NormalizeValue();
             row.ParamsGetter = () => node.Model.Params;
             row.Changed = () => OnRowChanged(node);
             switch (row)
